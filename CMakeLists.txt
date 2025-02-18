@@ -173,7 +173,9 @@ if (RGL_BUILD_WEATHER_EXTENSION)
 endif()
 
 target_include_directories(RobotecGPULidar
-    PUBLIC include
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+        $<INSTALL_INTERFACE:include>
     PRIVATE src
 )
 
@@ -181,7 +183,6 @@ target_link_libraries(RobotecGPULidar PRIVATE
     ${RGL_SPDLOG_VARIANT}
     yaml-cpp
     optixPrograms
-    cmake_git_version_tracking
 )
 
 target_link_libraries(RobotecGPULidar PUBLIC
