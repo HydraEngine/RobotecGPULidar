@@ -27,7 +27,7 @@ set(RGL_AUTO_TAPE_PATH "" CACHE STRING  # STRING prevents from expanding relativ
     "If non-empty, defines a path for the automatic tape (started on the first API call)")
 
 # Library configuration
-set(RGL_BUILD_STATIC OFF CACHE BOOL
+set(RGL_BUILD_STATIC ON CACHE BOOL
     "Builds RobotecGPULidar as a statically linkable library instead of a shared one")
 
 # Test configuration
@@ -152,6 +152,7 @@ target_compile_definitions(RobotecGPULidar PUBLIC RGL_BUILD_PCL_EXTENSION=$<BOOL
 target_compile_definitions(RobotecGPULidar PUBLIC RGL_BUILD_ROS2_EXTENSION=$<BOOL:${RGL_BUILD_ROS2_EXTENSION}>)
 target_compile_definitions(RobotecGPULidar PUBLIC RGL_BUILD_UDP_EXTENSION=$<BOOL:${RGL_BUILD_UDP_EXTENSION}>)
 target_compile_definitions(RobotecGPULidar PUBLIC RGL_BUILD_WEATHER_EXTENSION=$<BOOL:${RGL_BUILD_WEATHER_EXTENSION}>)
+set_target_properties(RobotecGPULidar PROPERTIES CUDA_RESOLVE_DEVICE_SYMBOLS ON)
 
 if (RGL_BUILD_PCL_EXTENSION)
     add_subdirectory(extensions/pcl)
@@ -243,3 +244,8 @@ endif()
 if (RGL_BUILD_TOOLS)
     add_subdirectory(tools)
 endif()
+
+install(
+        DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
